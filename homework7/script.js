@@ -73,7 +73,7 @@ async function getBothData() {
       throw new Error("Failed to fetch products.");
     }
     const data = await Promise.all(resp.map((response) => response.json()));
-    console.log(data);
+
     data[0].map((item) => {
       const listItem = document.createElement("li");
       listItem.textContent = `${item.name.firstname} ${item.name.lastname}, ${item.email}`;
