@@ -60,6 +60,37 @@ getData();
 // დაარიზოლვოთ და ისე გამოიტანოთ დომში შესაბამისი ინფორამცია იუზერებზე, ანუ სანამ ორივე აიპიაი პასუხს არ
 // დააბრუნებს მანამდე არაფერი გამოაჩინოთ დომში.
 
+const listOne = document.querySelector(".data_list_one");
+const listTwo = document.querySelector(".data_list_Two");
+
+async function getBothData() {
+  try {
+    const resp = await Promise.all([
+      fetch("https://fakestoreapi.com/users"),
+      fetch("https://jsonplaceholder.typicode.com/users"),
+    ]);
+    if (!resp[0].ok || !resp[1].ok) {
+      throw new Error("Failed to fetch products.");
+    }
+    const data = await Promise.all(resp.map((response) => response.json()));
+    console.log(data);
+    data[0].map((item) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${item.name.firstname} ${item.name.lastname}, ${item.email}`;
+      listOne.appendChild(listItem);
+    });
+
+    data[1].map((item) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${item.name}, ${item.email}`;
+      listTwo.appendChild(listItem);
+    });
+  } catch (error) {
+    console.log("fetching error", error);
+  }
+}
+getBothData();
+
 // 4) დაწერეთ ფუნცქია რომელიც დაგვილოგავს მაუსის კორდინატებს მას შემდეგ რაც გავაჩერებთ მაუსს, გამოიყენეთ დიბაუნს ტექნიკა
 
 function handleMouseMove(event) {
