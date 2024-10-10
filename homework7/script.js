@@ -13,6 +13,7 @@ function debounce(func, delay) {
     }, delay);
   };
 }
+
 const searchInput = document.getElementById("input");
 
 async function handleSearch(event) {
@@ -59,6 +60,16 @@ getData();
 // დაარიზოლვოთ და ისე გამოიტანოთ დომში შესაბამისი ინფორამცია იუზერებზე, ანუ სანამ ორივე აიპიაი პასუხს არ
 // დააბრუნებს მანამდე არაფერი გამოაჩინოთ დომში.
 
-
-
 // 4) დაწერეთ ფუნცქია რომელიც დაგვილოგავს მაუსის კორდინატებს მას შემდეგ რაც გავაჩერებთ მაუსს, გამოიყენეთ დიბაუნს ტექნიკა
+
+function handleMouseMove(event) {
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+  res.textContent = `Mouse Coordinates: ${mouseX} and ${mouseY}`;
+}
+
+const debouncedMouseMove = debounce(handleMouseMove, 300);
+
+document.addEventListener("mousemove", debouncedMouseMove);
+
+const res = document.getElementById("mouse_result");
