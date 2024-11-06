@@ -7,24 +7,39 @@
 // use: node-fetch and commander
 
 import { Command } from "commander";
-import { readFile, writeFile } from "./utils.js";
+import { config } from "dotenv";
+// import { readFile, writeFile } from "./utils.js";
+
+config();
 const program = new Command();
 
+const apiKey = process.env.API_KEY;
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather";
+
+async function fetchWeather(city) {
+  const url = `${apiUrl}?q=${city}&units=metric&appid=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.cod === "404") {
+      console.log(`City ${city} not found.`);
+      return;
+    }
+
+    const temp = data.main.temp;
+    console.log(`The temp in ${city} is ${temp}°C.`);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 program
-  .command("create")
-  .description("create new user in the filesystem")
-  .argument("<name>", "user name")
-  .argument("<age>", "user age")
-  .action(async (name, age) => {
-    const users = await readFile("users.json", true);
-    const lastId = users[users.length - 1]?.id || 0;
-    const newUser = {
-      id: lastId + 1,
-      name,
-      age: Number(age),
-    };
-    users.push(newUser);
-    await writeFile("users.json", JSON.stringify(users));
+  .command("weather <city>")
+  .description("Get the temp for a city")
+  .action(async (city) => {
+    await fetchWeather(city);
   });
 
 program.parse();
