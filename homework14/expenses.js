@@ -50,67 +50,74 @@ app.post("/expenses", async (req, res) => {
 app.get("/expenses/:id", async (req, res) => {
   try {
     const expenses = await readFile();
-    const { id } = req.params;
-    const index = expenses.findIndex((expense) => expense.id === Number(id));
-    if (index === -1) {
-      res.status(400).json({ error: "Expense with that id not found" });
+    const expenseId = Number(req.params.id);
+    const expense = expenses.find((expense) => expense.id === expenseId);
+
+    if (!expense) {
+      return res.status(404).json({ error: "Expense not found" });
     }
-    res.json(expenses[index]);
+
+    res.json(expense);
   } catch (error) {
-    res.status(500).json({ error: "Failed to find expense with that id" });
+    res.status(500).json({ error: "Failed to retrieve expense" });
   }
 });
 
 app.put("/expenses/:id", async (req, res) => {
   try {
     const expenses = await readFile();
-    const { id } = req.params;
+    const expenseId = Number(req.params.id);
     const { category, price } = req.body;
 
-    const index = expenses.findIndex((expense) => expense.id === Number(id));
+    const expenseIndex = expenses.findIndex(
+      (expense) => expense.id === expenseId
+    );
 
-    if (index === -1) {
-      res.status(400).json({ error: "Expense with that id not found" });
+    if (expenseIndex === -1) {
+      return res.status(404).json({ error: "Expense not found" });
     }
 
-    expenses[index] = {
-      ...expenses[index],
-      price: price || expenses[index].price,
-      category: category || expenses[index].category,
+    expenses[expenseIndex] = {
+      ...expenses[expenseIndex],
+      price: price ?? expenses[expenseIndex].price,
+      category: category ?? expenses[expenseIndex].category,
     };
-    await writeFile(JSON.stringify(expenses));
 
-    res
-      .status(201)
-      .json({ message: "Expense updated successfully", data: expenses[index] });
+    await writeFile(JSON.stringify(expenses));
+    res.status(200).json({
+      message: "Expense updated successfully",
+      data: expenses[expenseIndex],
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to find expense with that ids" });
+    res.status(500).json({ error: "Failed to update expense" });
   }
 });
 
 app.delete("/expenses/:id", async (req, res) => {
   try {
     const expenses = await readFile();
-    const { id } = req.params;
+    const expenseId = Number(req.params.id);
     const apiKey = req.headers["x-api-key"];
+
     if (!apiKey) {
-      return res.status(401).json({ error: "API key not found" });
-    }
-    const index = expenses.findIndex((expense) => expense.id === Number(id));
-
-    if (index === -1) {
-      return res.status(400).json({ error: "Expense with that id not found" });
+      return res.status(401).json({ error: "API key required" });
     }
 
-    const deletedExpense = expenses.splice(index, 1);
+    const expenseIndex = expenses.findIndex(
+      (expense) => expense.id === expenseId
+    );
 
+    if (expenseIndex === -1) {
+      return res.status(404).json({ error: "Expense not found" });
+    }
+
+    expenses.splice(expenseIndex, 1);
     await writeFile(JSON.stringify(expenses));
-    res.status(201).json(deletedExpense);
+    res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: "Failed to find expense" });
+    res.status(500).json({ error: "Failed to delete expense" });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`server running on http://localhost:${PORT}`);
