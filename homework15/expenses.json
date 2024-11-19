@@ -33,12 +33,5 @@
     "price": 20,
     "importance": "high",
     "date": "2024-11-14T13:33:47.354Z"
-  },
-  {
-    "id": 7,
-    "category": "dog treats",
-    "price": 20,
-    "importance": "high",
-    "date": "2024-11-14T13:34:18.298Z"
   }
 ]
