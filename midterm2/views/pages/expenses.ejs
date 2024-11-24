@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Expense Manager</title>
+  </head>
+  <body>
+    <header>
+      <a href="/expenses/add">
+        <button>Add New Expense</button>
+      </a>
+    </header>
+    <main class="container">
+      <% expenses.forEach(expense => { %>
+      <div class="card">
+        <h2>Expense ID: <%= expense.id %></h2>
+        <p>Category: <%= expense.category %></p>
+        <p>Price: <%= expense.price %></p>
+        <p>Importance: <%= expense.importance %></p>
+        <div class="actions">
+          <a href="/expenses/expense/<%= expense.id %>">Show More</a>
+          <button onclick="handleDelete('<%= expense.id %>')">Delete</button>
+          <a href="/expenses/edit/<%= expense.id %>">
+            <button>Edit</button>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    </main>
+    <script src="/js/delete.js"></script>
+  </body>
+</html>

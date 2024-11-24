@@ -1,10 +1,12 @@
 import fs from "fs/promises";
 
-export const readFile = async (filePath, parsed) => {
-  const data = await fs.readFile(filePath, "utf-8");
-  return parsed ? data : JSON.parse(data);
+const FILE_PATH = "expenses.json";
+
+export const readFile = async () => {
+  const data = await fs.readFile(FILE_PATH, "utf-8");
+  return JSON.parse(data);
 };
 
-export const writeFile = async (filePath, data) => {
-  await fs.writeFile(filePath, data);
+export const writeFile = async (data) => {    
+  await fs.writeFile(FILE_PATH, data);
 };

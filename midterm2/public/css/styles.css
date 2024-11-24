@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+.card {
+  margin: 15px;
+  height: 250px;
+  display: inline-block;
+  border: 1px dotted #334233;
+  padding: 10px;
+  width: 250px;
+}
+h2 {
+  margin: 0px;
+}
