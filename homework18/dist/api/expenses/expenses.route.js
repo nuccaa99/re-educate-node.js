@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const expenses_service_1 = require("./expenses.service");
+const isValid_middleware_1 = require("../../middleware/isValid.middleware");
+const arePresent_middleware_1 = require("../../middleware/arePresent.middleware");
+const expensesRouter = (0, express_1.Router)();
+expensesRouter.get('/', (req, res) => (0, expenses_service_1.getAllExpenses)(req, res));
+expensesRouter.get('/expense/:id', (req, res) => (0, expenses_service_1.expenseDetails)(req, res));
+expensesRouter.get('/add', (req, res) => (0, expenses_service_1.addExpense)(req, res));
+expensesRouter.get('/edit/:id', (req, res) => (0, expenses_service_1.editExpense)(req, res));
+expensesRouter.post('/', arePresent_middleware_1.arePresent, (req, res) => (0, expenses_service_1.createExpense)(req, res));
+expensesRouter.get('/:id', (req, res) => (0, expenses_service_1.getExpenseById)(req, res));
+expensesRouter.put('/:id', (req, res) => (0, expenses_service_1.updateExpenseById)(req, res));
+expensesRouter.delete('/:id', isValid_middleware_1.isValid, (req, res) => (0, expenses_service_1.deleteExpenseById)(req, res));
+exports.default = expensesRouter;

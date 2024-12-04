@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const flowers_service_1 = require("./flowers.service");
+const flowersRouter = (0, express_1.Router)();
+flowersRouter.get("/", (req, res) => (0, flowers_service_1.getAllFlowers)(req, res));
+flowersRouter.post("/", (req, res) => (0, flowers_service_1.createFlower)(req, res));
+flowersRouter.get("/:id", (req, res) => (0, flowers_service_1.getFlowerById)(req, res));
+flowersRouter.put("/:id", (req, res) => (0, flowers_service_1.updateFlowerById)(req, res));
+flowersRouter.delete("/:id", (req, res) => (0, flowers_service_1.deleteFlowerById)(req, res));
+exports.default = flowersRouter;
