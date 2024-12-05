@@ -1,6 +1,6 @@
-const form = document.querySelector('form') as HTMLFormElement;
+const form = document.querySelector("form") as HTMLFormElement;
 
-form.addEventListener('submit', async (e: Event) => {
+form.addEventListener("submit", async (e: Event) => {
   e.preventDefault();
 
   const category = (form.category as HTMLInputElement).value;
@@ -8,9 +8,9 @@ form.addEventListener('submit', async (e: Event) => {
   const importance = (form.importance as HTMLInputElement).value;
 
   try {
-    const res = await fetch('http://localhost:3000/expenses/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("http://localhost:3000/expenses/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         category,
         price: Number(price),
@@ -19,12 +19,12 @@ form.addEventListener('submit', async (e: Event) => {
     });
 
     if (res.ok) {
-      window.location.href = '/expenses';
+      window.location.href = "/expenses";
     } else {
       const errorData = await res.json();
-      console.error('Failed to update expense:', errorData);
+      console.error("Failed to update expense:", errorData);
     }
   } catch (error) {
-    console.error('Network or fetch error:', error);
+    console.error("Network or fetch error:", error);
   }
 });

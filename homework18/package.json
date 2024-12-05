@@ -1,7 +1,7 @@
 {
-  "name": "homework14",
+  "name": "homework18",
   "version": "1.0.0",
-  "type": "module",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "prebuild": "rimraf ./dist",
@@ -15,21 +15,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.3",
     "concurrently": "^9.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
+    "dotenv": "^16.4.7",
     "express": "^4.21.1",
-    "mongoose": "^8.8.3",
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.1",
+    "mongoose": "^8.8.3",
     "nodemon": "^3.1.7",
     "typescript": "^5.7.2"
-  },
-  "description": ""
+  }
 }

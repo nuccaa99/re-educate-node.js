@@ -4,7 +4,7 @@ exports.arePresent = void 0;
 const arePresent = (req, res, next) => {
     const { category, price, importance } = req.body;
     if (!price || !category || !importance) {
-        res.status(400).json({ error: 'All fields are required' });
+        res.status(400).json({ error: "All fields are required" });
         return;
     }
     next();

@@ -1,10 +1,10 @@
 import express, { Application } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { connectionToDb } from "./db/db.js";
-import expensesRouter from "./api/expenses/expenses.route.js";
-import randomRouter from "./api/random/random.route.js";
-import flowersRouter from "./api/flowers/flowers.route.js";
+import { connectionToDb } from "./db/db";
+import expensesRouter from "./api/expenses/expenses.route";
+import randomRouter from "./api/random/random.route";
+import flowersRouter from "./api/flowers/flowers.route";
 
 const app: Application = express();
 
@@ -19,9 +19,10 @@ app.use("/expenses", expensesRouter);
 app.use("/random", randomRouter);
 app.use("/flowers", flowersRouter);
 
+const PORT: number = 3000;
+
 connectionToDb();
 
-const PORT: number = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

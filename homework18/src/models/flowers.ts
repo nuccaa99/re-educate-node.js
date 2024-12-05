@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
 interface FlowerDocument {
-  name: string;
-  type: number;
-  age: string;
+  name: String;
+  type: String;
+  age: Number;
 }
 
-const flowersSchema =
-  new mongoose.Schema<FlowerDocument>(
+const flowersSchema = new mongoose.Schema<FlowerDocument>(
   {
     name: {
       type: String,
@@ -19,5 +18,7 @@ const flowersSchema =
   { timestamps: true }
 );
 
-export const flowersModel =
-  mongoose.model < FlowerDocument > ("flowers", flowersSchema);
+export const flowersModel = mongoose.model<FlowerDocument>(
+  "flowers",
+  flowersSchema
+);
